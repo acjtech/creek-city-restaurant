@@ -118,19 +118,15 @@
             <label for="meal">Choose a dish</label>
             <select id="meal" name="meal" required>
               <option value="">Select a dish</option>
-              <option>Shawarma Plates</option>
-              <option>Firewood-Grilled Kebabs</option>
-              <option>Fresh Traditional Mezze</option>
-              <option>Authentic Chicken Biryani</option>
-              <option>Afghan Pulao</option>
-              <option>Fresh Karahi Curries</option>
-              <option>Creek City Special Soup</option>
-              <option>Traditional Lentil Soup</option>
-              <option>Lahore Sajji</option>
-              <option>Italian Pastas</option>
-              <option>Chinese Noodles</option>
-              <option>Thai Curries</option>
-              <option>Other — add details in notes</option>
+              <option>Kabuli Pulao Rice With Mutton Tikka</option>
+              <option>Rocca With Chesse Saled</option>
+              <option>Hummus</option>
+              <option>Kely Saled</option>
+              <option>Ice \coffe</option>
+              <option>Patlican Kabab</option>
+              <option>Mutabel</option>
+              <option>Strawberry</option>
+              <option>Special Kabuli Pulao</option>
             </select>
           </div>
           <div class="field">
@@ -167,7 +163,7 @@
         <section class="info-card">
           <h2>Delivery or pickup</h2>
           <p>For delivery, provide a complete address. Delivery coverage, timing, and any fees are confirmed by the restaurant.</p>
-          <p>Typical spend is AED 50 - 100 per person. Menu prices and availability can be confirmed directly with the team.</p>
+          <p>Listed dish prices are shown in the menu. The restaurant will confirm availability, delivery fees, and the final total.</p>
         </section>
         <section class="info-card">
           <h2>Need a hand?</h2>
@@ -178,20 +174,16 @@
     </main>
     <footer class="footer">CREEK CITY RESTAURANT · Grand Souq, Bur Dubai, Al Souq Al Kabeer, Dubai, United Arab Emirates</footer>
     <script>
-      const menuItems = new Set([
-        "Shawarma Plates",
-        "Firewood-Grilled Kebabs",
-        "Fresh Traditional Mezze",
-        "Authentic Chicken Biryani",
-        "Afghan Pulao",
-        "Fresh Karahi Curries",
-        "Creek City Special Soup",
-        "Traditional Lentil Soup",
-        "Lahore Sajji",
-        "Italian Pastas",
-        "Chinese Noodles",
-        "Thai Curries",
-        "Other — add details in notes",
+      const menuPrices = new Map([
+        ["Kabuli Pulao Rice With Mutton Tikka", 49],
+        ["Rocca With Chesse Saled", 32],
+        ["Hummus", 18],
+        ["Kely Saled", 35],
+        ["Ice \\coffe", 18],
+        ["Patlican Kabab", 40],
+        ["Mutabel", 18],
+        ["Strawberry", 18],
+        ["Special Kabuli Pulao", 45],
       ]);
       const form = document.getElementById("order-form");
       const mealSelect = document.getElementById("meal");
@@ -202,7 +194,7 @@
       const fallbackLink = document.getElementById("whatsapp-fallback");
 
       const selectedMeal = new URLSearchParams(window.location.search).get("meal");
-      if (selectedMeal && menuItems.has(selectedMeal)) {
+      if (selectedMeal && menuPrices.has(selectedMeal)) {
         mealSelect.value = selectedMeal;
       }
 
@@ -219,13 +211,17 @@
         if (!form.reportValidity()) return;
 
         const data = new FormData(form);
+        const quantity = Number(data.get("quantity"));
+        const unitPrice = menuPrices.get(data.get("meal"));
         const orderLines = [
           "Hello Creek City Restaurant, I would like to place an order.",
           "",
           `Name: ${data.get("customerName").trim()}`,
           `Phone: ${data.get("customerPhone").trim()}`,
           `Dish: ${data.get("meal")}`,
-          `Quantity: ${data.get("quantity")}`,
+          `Listed price: AED ${unitPrice.toFixed(2)} each`,
+          `Quantity: ${quantity}`,
+          `Item subtotal: AED ${(unitPrice * quantity).toFixed(2)}`,
           `Order type: ${data.get("serviceType")}`,
         ];
         if (data.get("serviceType") === "Delivery") {

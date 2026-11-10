@@ -75,6 +75,16 @@
       .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
       .hero-note { position: absolute; right: 6%; bottom: 42px; display: flex; align-items: center; gap: 11px; color: rgba(255,255,255,.85); font-size: .64rem; letter-spacing: .08em; text-transform: uppercase; }
       .hero-note::before { width: 29px; height: 1px; background: var(--amber); content: ""; }
+      .creek-animation { position: absolute; right: 8%; bottom: 12%; z-index: 0; width: min(390px,36vw); height: 125px; color: #e8c38b; opacity: .76; pointer-events: none; }
+      .creek-animation::before, .creek-animation::after { position: absolute; right: 0; bottom: 7px; left: 0; height: 25px; border-top: 1px solid rgba(232,195,139,.55); border-radius: 50%; content: ""; }
+      .creek-animation::before { animation: creek-ripple 5s ease-in-out infinite alternate; }
+      .creek-animation::after { bottom: 0; left: 15%; animation: creek-ripple 6s ease-in-out infinite alternate-reverse; }
+      .creek-animation svg { position: absolute; right: 12%; bottom: 16px; width: 56%; overflow: visible; animation: abra-glide 7s ease-in-out infinite alternate; }
+      .creek-animation .boat { fill: rgba(211,160,97,.75); }
+      .creek-animation .lantern-glow { fill: rgba(242,196,119,.22); animation: lantern-glow 2.8s ease-in-out infinite alternate; }
+      @keyframes creek-ripple { from { transform: scaleX(.86) translateY(2px); opacity: .4; } to { transform: scaleX(1.04) translateY(-2px); opacity: .85; } }
+      @keyframes abra-glide { from { transform: translateX(-8px); } to { transform: translateX(12px); } }
+      @keyframes lantern-glow { from { opacity: .35; } to { opacity: .9; } }
 
       .intro-band { padding: 24px 0; color: white; background: var(--navy-soft); }
       .intro-band .wrap { display: flex; align-items: center; justify-content: space-between; gap: 25px; }
@@ -251,6 +261,8 @@
       .dish-card:hover { box-shadow: 0 14px 32px rgba(38,55,58,.12); }
       .dish-image { background: #e8dfd1; }
       .dish-type { color: #936a3e; }
+      .dish-price { display: block; margin: 10px 0 15px; color: var(--navy); font: 600 1rem var(--serif); }
+      .dish-order { width: 100%; }
       .diet-note { background: var(--navy-soft); }
       .delivery { background-image: linear-gradient(100deg,rgba(16,45,58,.96),rgba(16,45,58,.74)),url("assets/dubai-creek.png"); }
       .delivery-card { box-shadow: 0 22px 55px rgba(0,0,0,.18); }
@@ -280,6 +292,7 @@
         }
         .hero-inner { margin-top: 74px; }
         .hero h1 { font-size: clamp(3.35rem,12.5vw,5.5rem); }
+        .creek-animation { right: 5%; bottom: 12%; width: 58%; opacity: .45; }
         .story { padding: 82px 0; }
       }
       @media (prefers-reduced-motion: reduce) {
@@ -321,6 +334,15 @@
             </div>
           </div>
         </div>
+        <div class="creek-animation" aria-hidden="true">
+          <svg viewBox="0 0 240 110" role="presentation">
+            <circle class="lantern-glow" cx="139" cy="27" r="25" />
+            <path class="boat" d="M27 67h177l-22 25H55z" />
+            <path class="boat" d="M79 62V34h66v28h-8V42H87v20z" />
+            <path class="boat" d="M111 34V18h18v16z" />
+            <path d="M115 30V20h10v10z" fill="#f2c477" />
+          </svg>
+        </div>
         <div class="hero-note">Wooden deck · Creekside evenings</div>
       </section>
 
@@ -357,7 +379,7 @@
             <div class="section-head-copy">
               <p class="eyebrow">A menu for the whole table</p>
               <h2 class="section-title">From the grill to the creek.</h2>
-              <p class="section-copy">A crossroad of Turkish, Arabic, Afghan, South Asian, and global favorites. Choose a collection to explore a few of the dishes and flavors on offer.</p>
+              <p class="section-copy">Browse the dishes and prices shared by Creek City. Vegan and vegetarian-friendly selections are part of the menu; please confirm ingredients and preparation with the team.</p>
             </div>
           </div>
           <div class="filters" role="group" aria-label="Filter menu by category">
@@ -368,41 +390,45 @@
             <button class="filter" type="button" data-filter="global" aria-pressed="false">Global &amp; Desi</button>
           </div>
           <div class="menu-grid" id="menu-grid">
-            <article class="dish-card" data-category="grill">
-              <img class="dish-image" src="assets/grilled-flatbread.png" alt="Grilled meat, fresh vegetables, and sauce on flatbread" loading="lazy" />
-              <div class="dish-body"><span class="dish-type">Turkish &amp; Arabic Specialties</span><h3>Shawarma Plates</h3><p>Flavorful shawarma with fresh accompaniments, ready for a satisfying meal.</p><a class="button dish-order" href="order.html?meal=Shawarma%20Plates">Order this dish <span aria-hidden="true">→</span></a></div>
-            </article>
-            <article class="dish-card" data-category="grill">
-              <img class="dish-image" src="assets/seekh-kebab.png" alt="Charcoal-grilled seekh kebabs with herbs and salad" loading="lazy" />
-              <div class="dish-body"><span class="dish-type">Turkish &amp; Arabic Specialties</span><h3>Firewood-Grilled Kebabs</h3><p>Smoky, freshly grilled favorites served with salad and traditional sides.</p><a class="button dish-order" href="order.html?meal=Firewood-Grilled%20Kebabs">Order this dish <span aria-hidden="true">→</span></a></div>
-            </article>
-            <article class="dish-card" data-category="grill">
-              <img class="dish-image" src="assets/kebab-platter.png" alt="Grilled kebab platter with fresh salad and bread" loading="lazy" />
-              <div class="dish-body"><span class="dish-type">Turkish &amp; Arabic Specialties</span><h3>Fresh Traditional Mezze</h3><p>Bright, shareable starters to bring the table together.</p><a class="button dish-order" href="order.html?meal=Fresh%20Traditional%20Mezze">Order this dish <span aria-hidden="true">→</span></a></div>
-            </article>
             <article class="dish-card" data-category="afghan">
-              <img class="dish-image" src="assets/chicken-biryani.png" alt="Spiced chicken biryani with fragrant rice" loading="lazy" />
-              <div class="dish-body"><span class="dish-type">South Asian &amp; Afghan Gems</span><h3>Authentic Chicken Biryani</h3><p>Fragrant, warmly spiced rice and chicken — a favorite for sharing.</p><a class="button dish-order" href="order.html?meal=Authentic%20Chicken%20Biryani">Order this dish <span aria-hidden="true">→</span></a></div>
-            </article>
-            <article class="dish-card" data-category="afghan">
-              <img class="dish-image" src="assets/mutton-pulao.png" alt="Afghan-style mutton pulao garnished with herbs and vegetables" loading="lazy" />
-              <div class="dish-body"><span class="dish-type">South Asian &amp; Afghan Gems</span><h3>Afghan Pulao</h3><p>A comforting rice specialty with tender meat, herbs, and classic accompaniments.</p><a class="button dish-order" href="order.html?meal=Afghan%20Pulao">Order this dish <span aria-hidden="true">→</span></a></div>
-            </article>
-            <article class="dish-card" data-category="afghan">
-              <img class="dish-image" src="assets/delivery-platter.png" alt="A meal platter with rice, grilled meat, salad, and flatbread" loading="lazy" />
-              <div class="dish-body"><span class="dish-type">South Asian &amp; Afghan Gems</span><h3>Fresh Karahi Curries</h3><p>Order a freshly prepared karahi to enjoy with rice or bread at the table.</p><a class="button dish-order" href="order.html?meal=Fresh%20Karahi%20Curries">Order this dish <span aria-hidden="true">→</span></a></div>
+              <img class="dish-image" src="assets/kabuli-pulao-mutton-tikka.png" alt="Kabuli Pulao Rice With Mutton Tikka" loading="lazy" />
+              <div class="dish-body"><span class="dish-type">South Asian &amp; Afghan Gems</span><h3>Kabuli Pulao Rice With Mutton Tikka</h3><span class="dish-price">AED 49.00</span><a class="button dish-order" href="order.html?meal=Kabuli%20Pulao%20Rice%20With%20Mutton%20Tikka">Order this dish <span aria-hidden="true">→</span></a></div>
             </article>
             <article class="dish-card" data-category="soups">
-              <img class="dish-image" src="assets/biryani-bowl.png" alt="A colorful bowl with rice, fresh herbs, and vegetables" loading="lazy" />
-              <div class="dish-body"><span class="dish-type">Soups &amp; Small Plates</span><h3>Creek City Special Soup</h3><p>The signature soup, alongside a comforting traditional lentil soup.</p><a class="button dish-order" href="order.html?meal=Creek%20City%20Special%20Soup">Order this dish <span aria-hidden="true">→</span></a></div>
+              <img class="dish-image" src="assets/rocca-cheese-salad.png" alt="Rocca With Chesse Saled" loading="lazy" />
+              <div class="dish-body"><span class="dish-type">Soups &amp; Small Plates</span><h3>Rocca With Chesse Saled</h3><span class="dish-price">AED 32.00</span><a class="button dish-order" href="order.html?meal=Rocca%20With%20Chesse%20Saled">Order this dish <span aria-hidden="true">→</span></a></div>
+            </article>
+            <article class="dish-card" data-category="soups">
+              <img class="dish-image" src="assets/hummus.png" alt="Hummus" loading="lazy" />
+              <div class="dish-body"><span class="dish-type">Soups &amp; Small Plates</span><h3>Hummus</h3><span class="dish-price">AED 18.00</span><a class="button dish-order" href="order.html?meal=Hummus">Order this dish <span aria-hidden="true">→</span></a></div>
+            </article>
+            <article class="dish-card" data-category="soups">
+              <img class="dish-image" src="assets/kely-salad.png" alt="Kely Saled" loading="lazy" />
+              <div class="dish-body"><span class="dish-type">Soups &amp; Small Plates</span><h3>Kely Saled</h3><span class="dish-price">AED 35.00</span><a class="button dish-order" href="order.html?meal=Kely%20Saled">Order this dish <span aria-hidden="true">→</span></a></div>
             </article>
             <article class="dish-card" data-category="global">
-              <img class="dish-image" src="assets/grill-and-wrap.png" alt="A selection of grilled specialties and wraps" loading="lazy" />
-              <div class="dish-body"><span class="dish-type">Global Fusion &amp; Desi Additions</span><h3>Lahore Sajji</h3><p>Newly introduced Lahore Sajji joins Italian pastas, Chinese noodles, and Thai curries.</p><a class="button dish-order" href="order.html?meal=Lahore%20Sajji">Order this dish <span aria-hidden="true">→</span></a></div>
+              <img class="dish-image" src="assets/iced-coffee.png" alt="Ice coffe" loading="lazy" />
+              <div class="dish-body"><span class="dish-type">Global Fusion &amp; Desi Additions</span><h3>Ice \coffe</h3><span class="dish-price">AED 18.00</span><a class="button dish-order" href="order.html?meal=Ice%20%5Ccoffe">Order this dish <span aria-hidden="true">→</span></a></div>
+            </article>
+            <article class="dish-card" data-category="grill">
+              <img class="dish-image" src="assets/patlican-kabab.png" alt="Patlican Kabab" loading="lazy" />
+              <div class="dish-body"><span class="dish-type">Turkish &amp; Arabic Specialties</span><h3>Patlican Kabab</h3><span class="dish-price">AED 40.00</span><a class="button dish-order" href="order.html?meal=Patlican%20Kabab">Order this dish <span aria-hidden="true">→</span></a></div>
+            </article>
+            <article class="dish-card" data-category="soups">
+              <img class="dish-image" src="assets/mutabel.png" alt="Mutabel" loading="lazy" />
+              <div class="dish-body"><span class="dish-type">Soups &amp; Small Plates</span><h3>Mutabel</h3><span class="dish-price">AED 18.00</span><a class="button dish-order" href="order.html?meal=Mutabel">Order this dish <span aria-hidden="true">→</span></a></div>
+            </article>
+            <article class="dish-card" data-category="global">
+              <img class="dish-image" src="assets/strawberry.png" alt="Strawberry" loading="lazy" />
+              <div class="dish-body"><span class="dish-type">Global Fusion &amp; Desi Additions</span><h3>Strawberry</h3><span class="dish-price">AED 18.00</span><a class="button dish-order" href="order.html?meal=Strawberry">Order this dish <span aria-hidden="true">→</span></a></div>
+            </article>
+            <article class="dish-card" data-category="afghan">
+              <img class="dish-image" src="assets/special-kabuli-pulao.png" alt="Special Kabuli Pulao" loading="lazy" />
+              <div class="dish-body"><span class="dish-type">South Asian &amp; Afghan Gems</span><h3>Special Kabuli Pulao</h3><span class="dish-price">AED 45.00</span><a class="button dish-order" href="order.html?meal=Special%20Kabuli%20Pulao">Order this dish <span aria-hidden="true">→</span></a></div>
             </article>
           </div>
           <div class="diet-note">
-            <div><h3>Good choices for plant lovers, too.</h3><p>Vegetarian-friendly and vegan-friendly dishes are an important part of the Creek City table. Explore traditional mezze, lentil soup, and other meat-free favorites; ask the team about ingredients and preparation when ordering.</p></div>
+            <div><h3>Good choices for plant lovers, too.</h3><p>Vegan and vegetarian-friendly meals are an important part of Creek City’s tourist appeal. Ask the team which dishes meet your needs and confirm ingredients and preparation when ordering.</p></div>
             <div class="diet-icons">Vegan-friendly<br />Vegetarian-friendly</div>
           </div>
         </div>
